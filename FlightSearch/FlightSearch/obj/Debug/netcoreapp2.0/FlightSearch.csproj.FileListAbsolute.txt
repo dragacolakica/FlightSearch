@@ -1,0 +1,11 @@
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\bin\Debug\netcoreapp2.0\FlightSearch.deps.json
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\bin\Debug\netcoreapp2.0\FlightSearch.runtimeconfig.json
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\bin\Debug\netcoreapp2.0\FlightSearch.runtimeconfig.dev.json
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\bin\Debug\netcoreapp2.0\FlightSearch.dll
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\bin\Debug\netcoreapp2.0\FlightSearch.pdb
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\obj\Debug\netcoreapp2.0\FlightSearch.csproj.CoreCompileInputs.cache
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\obj\Debug\netcoreapp2.0\FlightSearch.AssemblyInfoInputs.cache
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\obj\Debug\netcoreapp2.0\FlightSearch.AssemblyInfo.cs
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\obj\Debug\netcoreapp2.0\FlightSearch.dll
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\obj\Debug\netcoreapp2.0\FlightSearch.pdb
+C:\Users\zaratustra\source\repos\FlightSearch\FlightSearch\obj\Debug\netcoreapp2.0\FlightSearch.csprojResolveAssemblyReference.cache

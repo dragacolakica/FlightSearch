@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html ng-app="app" ng-controller="main as vm">
+<head>
+    <meta charset="utf-8" />
+    <title> Flight Search</title>
+    <link href="wwwroot/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Flight Low-Fare Search</a>
+            </div>
+        </div>
+    </nav>
+    <hr />
+    <div class="bg-info row">
+        <h6 style="text-align: center;">This is the low fare search engine Amadeus uses to retrieve the best price for flights, based on our latest Master Pricer Travel Board technology.</h6>
+    </div>
+    <hr />
+    <div class="row">
+        <form class="form-horizontal" name="vm.searchForm" novalidate="novalidate">
+            <div class="form-group" ng-show="vm.cityCodes.length > 1">
+                <label class="col-md-4 col-sm-4 control-label">ORIGIN*</label>
+                <div class="col-md-2 col-sm-2">
+                    <input id="origin" name="origin" class="form-control" 
+                           ng-required="true"
+                           ng-model="vm.search.origin"
+                           uib-typeahead="city for city in vm.cityCodes | filter:$viewValue | limitTo:8"
+                           typeahead-on-select="vm.onSelect($item, $model, $label)"
+                           typeahead-editable="false" />
+                    <div ng-show="vm.searchForm.origin.$touched || vm.searchForm.$submitted">
+                        <span ng-show="vm.searchForm.origin.$error.required">Origin is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 col-sm-4 control-label">DESTINATION*</label>
+                <div class="col-md-2 col-sm-2">
+                    <input id="destination" name="destination" class="form-control" 
+                           ng-required="true"
+                           ng-model="vm.search.destination"
+                           uib-typeahead="city for city in vm.cityCodes | filter:$viewValue | limitTo:8"
+                           typeahead-on-select="vm.onSelect($item, $model, $label)"
+                           typeahead-editable="false" />
+                    <div ng-show="vm.searchForm.destination.$touched || vm.searchForm.$submitted">
+                        <span ng-show="vm.searchForm.destination.$error.required">Destination is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 col-sm-4 control-label">DEPARTURE DATE</label>
+                <div class="col-md-2 col-sm-2">
+                    <input type="text"
+                           class="form-control date"
+                           id="departuredate"
+                           name="departuredate"
+                           ng-click="vm.openFirst=true"
+                           uib-datepicker-popup="{{vm.format}}"
+                           ng-model="vm.search.departure_date"
+                           ng-model-options="{timezone: 'UTC'}"
+                           is-open="vm.openFirst"
+                           close-text="Close"
+                           required>
+                    <div ng-show="vm.searchForm.departuredate.$touched || vm.searchForm.$submitted">
+                        <span ng-show="vm.searchForm.departuredate.$error.required">Departure date is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 col-sm-4 control-label">RETURN DATE</label>
+                <div class="col-md-2 col-sm-2">
+                    <input id="returndate"
+                           name="returndate"
+                           type="text"
+                           class="form-control date"
+                           ng-click="vm.openSecond=true"
+                           uib-datepicker-popup="{{vm.format}}"
+                           ng-model="vm.search.return_date"
+                           ng-model-options="{timezone: 'UTC'}"
+                           is-open="vm.openSecond"
+                           close-text="Close">                   
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 col-sm-4 control-label">CURRENCY</label>
+                <div class="col-md-2 col-sm-2">
+                    <select class="form-control"
+                            id="currency"
+                            ng-model="vm.search.currency"
+                            ng-required="true"
+                            name="currency"
+                            type="text"
+                            ng-options="c as c for c in vm.currencies"></select>
+
+                    <div ng-show="vm.searchForm.currency.$touched || vm.searchForm.$submitted">
+                        <span ng-show="vm.searchForm.currency.$error.required">Currency is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 col-sm-4 control-label">ADULTS*</label>
+                <div class="col-md-2 col-sm-2">
+                    <input id="adults" name="adults" class="form-control" type="number" min="1" max="9"
+                           ng-required="true"
+                           ng-model="vm.search.adults">
+                    <div ng-show="vm.searchForm.adults.$touched || vm.searchForm.$submitted">
+                        <span ng-show="vm.searchForm.adults.$error.required">The number of adult (age 12 and over) passengers traveling on this flight is required.</span>
+                        <span ng-show="vm.searchForm.adults.$error.min || vm.searchForm.adults.$error.max">Number of adults must be between 1 and 9.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4 col-sm-4"></div>
+                <div class="col-md-2 col-sm-2">
+                    <button type="button" class="btn btn-primary btn-rounded btn-block" ng-click="vm.searchFlight()">SEARCH</button>
+                </div>
+
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-3 col-sm-3"></div>
+            <div class="col-md-6 col-sm-6">
+                <div class="alert alert-info fade in alert-dismissable" ng-show="vm.alert" style="text-align: center;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close" ng-click="vm.alert = false">×</a>
+                    <strong>Uspješno ste poslali podatke.</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="center-block col-md-10 col-xs-10" style="float: none;">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Currency</th>
+                        <th class="text-center">Origin</th>
+                        <th class="text-center">Destination</th>
+                        <th class="text-center">Departure date</th>
+                        <th class="text-center">Return date</th>
+                        <th class="text-center">InBoundCount</th>
+                        <th class="text-center">OutBoundCount</th>
+                        <th class="text-center">Adults</th>
+                        <th class="text-center">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="r in vm.results">
+                        <td class="text-center">{{r.}}</td>
+                        <td class="text-center">LON</td>
+                        <td class="text-center">2018-06-25</td>
+                        <td class="text-center">2018-06-25</td>
+                        <td class="text-center">2</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">USD</td>
+                        <td class="text-center">6000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hr />
+
+
+    <script src="wwwroot/lib/angular/angular.js"></script>
+    <script src="wwwroot/lib/angular-route/angular-route.min.js"></script>
+    <script src="wwwroot/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="wwwroot/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="wwwroot/lib/jquery/dist/jquery.min.js"></script>
+    <script src="wwwroot/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="wwwroot/lib/angular-ui/build/angular-ui.min.js"></script>
+
+    <script src="app/app.js"></script>
+    <script src="app/controller.js"></script>
+    <script src="app/data.service.js"></script>
+    <hr />
+</body>
+</html>
