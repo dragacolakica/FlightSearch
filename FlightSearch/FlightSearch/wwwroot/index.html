@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title> Flight Search</title>
+    <link rel="shortcut icon" href="">
     <link href="wwwroot/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
@@ -24,7 +25,7 @@
             <div class="form-group" ng-show="vm.cityCodes.length > 1">
                 <label class="col-md-4 col-sm-4 control-label">ORIGIN*</label>
                 <div class="col-md-2 col-sm-2">
-                    <input id="origin" name="origin" class="form-control" 
+                    <input id="origin" name="origin" class="form-control"
                            ng-required="true"
                            ng-model="vm.search.origin"
                            uib-typeahead="city for city in vm.cityCodes | filter:$viewValue | limitTo:8"
@@ -39,7 +40,7 @@
             <div class="form-group">
                 <label class="col-md-4 col-sm-4 control-label">DESTINATION*</label>
                 <div class="col-md-2 col-sm-2">
-                    <input id="destination" name="destination" class="form-control" 
+                    <input id="destination" name="destination" class="form-control"
                            ng-required="true"
                            ng-model="vm.search.destination"
                            uib-typeahead="city for city in vm.cityCodes | filter:$viewValue | limitTo:8"
@@ -83,7 +84,7 @@
                            ng-model="vm.search.return_date"
                            ng-model-options="{timezone: 'UTC'}"
                            is-open="vm.openSecond"
-                           close-text="Close">                   
+                           close-text="Close">
                 </div>
             </div>
 
@@ -125,53 +126,40 @@
 
             </div>
         </form>
-        <div class="row">
-            <div class="col-md-3 col-sm-3"></div>
-            <div class="col-md-6 col-sm-6">
-                <div class="alert alert-info fade in alert-dismissable" ng-show="vm.alert" style="text-align: center;">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close" ng-click="vm.alert = false">×</a>
-                    <strong>Uspješno ste poslali podatke.</strong>
-                </div>
-            </div>
-        </div>
     </div>
 
-
     <div class="row">
-        <div class="center-block col-md-10 col-xs-10" style="float: none;">
+        <div class="center-block col-md-10 col-xs-10" style="float: none;" ng-show="vm.showResult">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th class="text-center">Currency</th>
                         <th class="text-center">Origin</th>
                         <th class="text-center">Destination</th>
                         <th class="text-center">Departure date</th>
                         <th class="text-center">Return date</th>
-                        <th class="text-center">InBoundCount</th>
                         <th class="text-center">OutBoundCount</th>
+                        <th class="text-center">InBoundCount</th>
                         <th class="text-center">Adults</th>
                         <th class="text-center">Price</th>
+                        <th class="text-center">Currency</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="r in vm.results">
-                        <td class="text-center">{{r.}}</td>
-                        <td class="text-center">LON</td>
-                        <td class="text-center">2018-06-25</td>
-                        <td class="text-center">2018-06-25</td>
-                        <td class="text-center">2</td>
-                        <td class="text-center">5</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">USD</td>
-                        <td class="text-center">6000</td>
+                        <td class="text-center">{{r.originName}}</td>
+                        <td class="text-center">{{r.destinationName}}</td>
+                        <td class="text-center">{{r.departureDate |  date:'yyyy-MM-dd'}}</td>
+                        <td class="text-center">{{r.returnDate | date:'yyyy-MM-dd'}}</td>
+                        <td class="text-center">{{r.outboundCount}}</td>
+                        <td class="text-center">{{r.inboundCount}}</td>
+                        <td class="text-center">{{r.adults}}</td>
+                        <td class="text-center">{{r.totalPrice}}</td>
+                        <td class="text-center">{{r.currency}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-    <hr />
-
 
     <script src="wwwroot/lib/angular/angular.js"></script>
     <script src="wwwroot/lib/angular-route/angular-route.min.js"></script>

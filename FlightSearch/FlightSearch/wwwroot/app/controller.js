@@ -14,6 +14,7 @@
         vm.currencies = ["USD", "EUR", "HRK"];
         vm.cityCodes = null;
         vm.format = "yyyy-MM-dd";
+        vm.showResult = false;
 
 
         data.getCityCodes().then(function (data) {
@@ -21,14 +22,16 @@
         });
 
         function searchFlight() {
+           
             if (vm.searchForm.$valid) {
-
+                vm.showResult = false;
                 data.getFlights(vm.search).then(function (data) {
                     //vm.search = null;
                     //vm.searchForm.$setPristine();
                     //vm.searchForm.$setUntouched();
+                    vm.showResult = true;
                     vm.results = data;
-
+                    
                 });
             }
         }

@@ -13131,11 +13131,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\zaratustra\\source\\repos\\FlightSearch\\FlightSearch\\FlightSearch.csproj",
+      "projectUniqueName": "C:\\Users\\zaratustra\\source\\repos\\FlightSearchGit\\FlightSearch\\FlightSearch\\FlightSearch.csproj",
       "projectName": "FlightSearch",
-      "projectPath": "C:\\Users\\zaratustra\\source\\repos\\FlightSearch\\FlightSearch\\FlightSearch.csproj",
+      "projectPath": "C:\\Users\\zaratustra\\source\\repos\\FlightSearchGit\\FlightSearch\\FlightSearch\\FlightSearch.csproj",
       "packagesPath": "C:\\Users\\zaratustra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zaratustra\\source\\repos\\FlightSearch\\FlightSearch\\obj\\",
+      "outputPath": "C:\\Users\\zaratustra\\source\\repos\\FlightSearchGit\\FlightSearch\\FlightSearch\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

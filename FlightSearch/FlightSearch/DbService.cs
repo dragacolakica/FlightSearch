@@ -20,7 +20,11 @@ namespace FlightSearch
         public IEnumerable<FlightResultVM> getSearchData(Search searchInfo)
         {
             var flightsInfo = new List<FlightResultVM>();
-            var oldSearch = db.Search.Where(x => x.Origin == searchInfo.Origin && x.Destination == searchInfo.Destination && x.Departure_date == searchInfo.Departure_date.Substring(0, 10) && x.Return_date == ((searchInfo.Return_date != "") ? searchInfo.Return_date.Substring(0, 10) : "")).SingleOrDefault();
+
+
+            var oldSearch = db.Search.Where(x => x.Origin == searchInfo.Origin && x.Destination == searchInfo.Destination && x.Departure_date.Substring(0, 10) == searchInfo.Departure_date.Substring(0, 10) && x.Return_date == searchInfo.Return_date && x.Adults == searchInfo.Adults && x.Currency == searchInfo.Currency).SingleOrDefault();
+
+
             if (oldSearch != null)
             {
                 var root = db.RootObject.Include(x => x.Results).Where(x => x.SearchId == oldSearch.Id).SingleOrDefault();
@@ -45,12 +49,14 @@ namespace FlightSearch
                     var outboundFlights = db.Flight.Where(x => outboundIds.Contains(x.OutboundId.Value)).ToList();
                     var inboundFlights = db.Flight.Where(x => inboundIds.Contains(x.InboundId.Value)).ToList();
 
-                    flightInfo.OutBoundCount = outboundFlights.Count();
-                    flightInfo.InBoundCount = inboundFlights.Count();
+                    flightInfo.OutboundCount = outboundFlights.Count();
+                    flightInfo.InboundCount = inboundFlights.Count();
 
                     flightsInfo.Add(flightInfo);
                 }
             }
+
+            flightsInfo.OrderBy(x => x.TotalPrice).ToList();
             return flightsInfo;
         }
     }

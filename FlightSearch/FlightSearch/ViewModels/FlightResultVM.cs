@@ -11,8 +11,8 @@ namespace FlightSearch.ViewModels
         public string DestinationName { get; set; }
         public string DepartureDate { get; set; }
         public string ReturnDate { get; set; }
-        public int? OutBoundCount { get; set; }
-        public int InBoundCount { get; set; }
+        public int OutboundCount { get; set; }
+        public int InboundCount { get; set; }
         public int Adults { get; set; }
         public string TotalPrice { get; set; }
         public string Currency { get; set; }
